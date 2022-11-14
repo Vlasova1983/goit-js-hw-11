@@ -12,8 +12,8 @@ let page=1;
 btnLoadMore.classList.add('clear');
 
 btnSubmit.addEventListener('submit', onClickBtnSearch);
-gallery.addEventListener('click', onGalleryClick);
 btnLoadMore.addEventListener('click', onLoadMore);
+gallery.addEventListener('click', onGalleryClick);
 
 function onClickBtnSearch(evt) {
   evt.preventDefault();
@@ -24,6 +24,7 @@ function onClickBtnSearch(evt) {
   fetchImages(input.value.trim()); 
   page=1;   
 } 
+
 function onLoadMore() {
   fetchImages(input.value.trim());
 };
@@ -38,6 +39,7 @@ async function fetchImages(name){
       btnLoadMore.classList.add('clear');
     } 
     else { 
+      Notiflix.Notify.info(`This is the ${page} page.`);
       btnLoadMore.classList.remove('clear');          
       gallery.innerHTML = image.map(item=>
         `<div class="photo-card">
@@ -79,17 +81,4 @@ function onGalleryClick(evt) {
 
 
 
-
-// refresh()
-
-
-
-// const { height: cardHeight } = document
-//   .querySelector(".gallery")
-//   .firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: "smooth",
-// });
 
