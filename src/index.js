@@ -50,7 +50,7 @@ async function fetchImages(name){
         Notiflix.Notify.info(`Hooray! We found ${response.data.totalHits} images.`);
       }
       btnLoadMore.classList.remove('clear');          
-      gallery.innerHTML = image.map(item=>
+      gallery.insertAdjacentHTML("beforeend", image.map(item=>
         `<div class="photo-card">
           <a class="photo-card__link"  href="${item.largeImageURL}">
             <img  src="${item.webformatURL}" data-source="${item.largeImageURL}" alt="${item.tags}" loading="lazy" width=120/>
@@ -62,7 +62,7 @@ async function fetchImages(name){
             <p class="info-item"><b>Downloads</b>${item.downloads}</p>
           </div>          
         </div> `) 
-      .join('');                   
+      .join(''));                   
     }  
     perPage+=40; 
     lightbox. refresh();   
