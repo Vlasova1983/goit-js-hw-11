@@ -39,7 +39,7 @@ function onGalleryClick(evt) {
    
 async function fetchImages(name){    
   try {
-    const response = await axios.get(`https://pixabay.com/api/?key=31294159-be9d27b57dbd5b4db758a00af&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=4&page=${page}`);
+    const response = await axios.get(`https://pixabay.com/api/?key=31294159-be9d27b57dbd5b4db758a00af&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`);
     const image = response.data.hits; 
           
     if (image.length === 0){ 
