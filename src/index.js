@@ -9,7 +9,7 @@ const btnLoadMore = document.querySelector('.load-more');
 const btnSubmit = document.querySelector('.search-form');
 const input = document.querySelector('[name = "searchQuery"]');
 const gallery = document.querySelector('.gallery');
-let perPage=40;
+let page=1;
 
 btnLoadMore.classList.add('clear');
 
@@ -22,9 +22,10 @@ function onClickBtnSearch(evt) {
   if(input.value===''){
     Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     return;
-  } 
+  }
+  gallery.innerHTML =''; 
   fetchImages(input.value.trim()); 
-  perPage=40;   
+  page=1;   
 } 
 
 function onLoadMore(evt) {
@@ -38,15 +39,16 @@ function onGalleryClick(evt) {
    
 async function fetchImages(name){    
   try {
-    const response = await axios.get(`https://pixabay.com/api/?key=31294159-be9d27b57dbd5b4db758a00af&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}`);
+    const response = await axios.get(`https://pixabay.com/api/?key=31294159-be9d27b57dbd5b4db758a00af&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=4&page=${page}`);
     const image = response.data.hits; 
-        
+          
     if (image.length === 0){ 
-      gallery.innerHTML = image.map(item=>``).join('');
+      gallery.innerHTML =''; 
       btnLoadMore.classList.add('clear');
+      Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     }     
-    else { 
-      if(perPage===40){
+    else {       
+      if(page===1){
         Notiflix.Notify.info(`Hooray! We found ${response.data.totalHits} images.`);
       }
       btnLoadMore.classList.remove('clear');          
@@ -62,13 +64,13 @@ async function fetchImages(name){
             <p class="info-item"><b>Downloads</b>${item.downloads}</p>
           </div>          
         </div> `) 
-      .join(''));                   
+      .join(''));                          
     }  
-    perPage+=40; 
+    page+=1;
     lightbox. refresh();   
   }
   catch (error) {
-    gallery.innerHTML = image.map(item=>``).join(''); 
+    gallery.innerHTML =''; 
     gallery.remove();
     btnLoadMore.classList.add('clear');
     Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -77,7 +79,8 @@ async function fetchImages(name){
 
 
 
-   
+// startChangeTimeBtn.setAttribute('disabled',true);
+// startChangeTimeBtn.removeAttribute('disabled');
 
 
 
